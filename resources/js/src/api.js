@@ -1,10 +1,14 @@
 const axios = window.axios;
 
 export default {
-    getAllPosts: () => {
-        return axios.get("/api/posts");
+    getAllProjects: () => {
+        return axios.get("/api/projects");
     },
     getSinglePost: (id) => axios.get(`/api/posts/${id}`),
-    addPost: (daPost) => axios.post(`/api/posts`, daPost),
+    addProject: (theProject) => axios.post(`/api/projects`, theProject),
     updatePost: (daPost, id) => axios.put(`/api/posts/${id}`, daPost),
+    registerUser: (user) => axios.post("/api/register", user),
+    loginUser: (user) => axios.post("/api/login", user),
+    loginOutUser: () => axios.post("/api/logout"),
+    getLoggedInUser: () => axios.post("/api/getuser"),
 };

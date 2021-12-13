@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PostCollection;
-use App\Http\Resources\PostResource;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +13,18 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return new PostCollection(Post::orderBy('created_at', 'desc')->get());
+        //
     }
 
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -29,15 +34,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'body' => 'required',
-        ]);
-
-        $post =  Post::create($request->all());
-
-        return response()->json(['data' => 'post created']);
+        //
     }
 
     /**
@@ -48,7 +45,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        return new PostResource(Post::findOrFail($id));
+        //
     }
 
     /**
@@ -59,7 +56,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        return new PostResource(Post::findOrFail($id));
+        //
     }
 
     /**
@@ -71,10 +68,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::findOrFail($id);
-        $post->update($request->all());
-
-        return response()->json(['data' => 'post updated']);
+        //
     }
 
     /**
@@ -85,8 +79,6 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
-        return response()->json(['data' => 'post deleted']);
+        //
     }
 }

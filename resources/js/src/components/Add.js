@@ -17,7 +17,6 @@ const Add = () => {
         } catch (e) {
             console.log("an error occured " + e);
         }
-        console.log(title, author);
     };
 
     return (

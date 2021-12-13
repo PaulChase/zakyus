@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Cookie;
 
 class Authenticate extends Middleware
 {
@@ -14,8 +16,20 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        if (!$request->expectsJson()) {
             return route('login');
         }
+    }
+
+    public function handle($request, Closure $next, ...$guards)
+    {
+        $loginToken = $request->cookie('logintoken');
+
+        if ($loginToken) {
+            $request->headers->set('Authorization', 'Bearer ' . $loginToken);
+        }
+        $this->authenticate($request, $guards);
+
+        return $next($request);
     }
 }
