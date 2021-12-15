@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
 
 const AddProject = ({ closeForm, refreshUserProjects }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const navigate = useNavigate();
 
     const handleAddProject = (e) => {
         e.preventDefault();
@@ -17,7 +15,6 @@ const AddProject = ({ closeForm, refreshUserProjects }) => {
         api.addProject(project).then((res) => {
             closeForm();
             refreshUserProjects();
-            // console.log(res.data);
         });
     };
 

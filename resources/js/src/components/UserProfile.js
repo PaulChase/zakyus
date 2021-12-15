@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import AddProject from "./AddProject";
 import ProjectList from "./ProjectList";
+import IsLoading from "./IsLoading";
 
 const UserProfile = ({ user }) => {
     const [showForm, setShowForm] = useState(false);
     const [projects, setProjects] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const getUserProjects = () => {
         api.getAllProjects().then((res) => {
             const projects = res.data;
+            setIsLoading(false);
+
             setProjects(projects);
             // console.log(res.data);
         });
@@ -22,6 +26,7 @@ const UserProfile = ({ user }) => {
             <nav className=" p-8 bg-gray-800">
                 <div className=" max-w-4xl mx-auto">
                     <h3 className=" text-2xl text-center my-3 font-bold">
+                        <i className=" fa fa-user fa-2x mr-2"></i>
                         Welcome to your profile
                     </h3>
                     <div className=" flex mb-5">
@@ -55,6 +60,7 @@ const UserProfile = ({ user }) => {
                         Add new Project
                     </button>
                 </div>
+                {isLoading && <IsLoading message="Getting your tasks" />}
                 <ProjectList projects={projects} />
             </div>
         </main>

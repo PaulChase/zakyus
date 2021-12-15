@@ -28,7 +28,8 @@ const ProjectList = ({ projects }) => {
                                 }}
                                 className=" bg-green-500 rounded-md px-2 py-2 font-semibold shadow-xl"
                             >
-                                Enter project
+                                Enter project{" "}
+                                <i className=" fa fa-chevron-right ml-2"></i>
                             </button>
                         </div>
                     ))}

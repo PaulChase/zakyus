@@ -21,18 +21,17 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::resource('tasks', TaskController::class);
-Route::get('/usertasks/{id}', [TaskController::class, 'getUserTasks']);
-Route::resource('projects', ProjectController::class);
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/changestatus', [TaskController::class, 'changeTaskStatus']);
 
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/dashboard', function () {
-        return 'the list of all current users';
-    });
+    Route::resource('tasks', TaskController::class);
+    Route::get('/usertasks/{id}', [TaskController::class, 'getUserTasks']);
+    Route::resource('projects', ProjectController::class);
 
     Route::post('/getuser', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);

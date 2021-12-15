@@ -44,7 +44,7 @@ class TaskController extends Controller
         $task = new Task;
         $task->name = $request->input('name');
         $task->status =   $request->input('status');
-        $task->project_id =  1;
+        $task->project_id = $request->input('projectID');
         $task->save();
 
         return response()->json(['message' => 'success']);
@@ -97,6 +97,18 @@ class TaskController extends Controller
 
     public function getUserTasks($id)
     {
-        return new TaskCollection(Task::where('project_id', $id)->get());
+        return new TaskCollection(Task::where('project_id', $id)->orderBy('updated_at', 'desc')->get());
+    }
+
+    public function changeTaskStatus(Request $request)
+    {
+        $taskID = $request->input('id');
+        $status = $request->input('status');
+
+        $task = Task::find($taskID);
+        $task->status = $status;
+        $task->save();
+
+        return response()->json(['message' => 'success']);
     }
 }

@@ -8,11 +8,7 @@ import {
     Routes,
     useNavigate,
 } from "react-router-dom";
-import Edit from "./components/Edit";
-import Add from "./components/Add";
-import Show from "./components/Show";
-import RegisterPage from "./components/RegisterPage";
-import LoginPage from "./components/LoginPage";
+
 import { useEffect, useState } from "react";
 import DashBoard from "./components/DashBoard";
 import api from "./api";
@@ -48,12 +44,7 @@ function App() {
                     }
                 />
                 <Route path="/profile" element={<UserProfile user={user} />} />
-                <Route path="/add" element={<Add />} />
-                <Route path="/posts/:id" element={<Show />} />
-                <Route path="/posts/:id/edit" element={<Edit />} />
-                <Route path="register" element={<RegisterPage />} />
                 <Route path="/dashboard" element={<DashBoard />} />
-                <Route path="/login" element={<LoginPage />} />
             </Routes>
         </Router>
     );
