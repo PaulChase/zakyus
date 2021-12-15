@@ -11,7 +11,7 @@ const UserProfile = ({ user }) => {
         api.getAllProjects().then((res) => {
             const projects = res.data;
             setProjects(projects);
-            console.log(res.data);
+            // console.log(res.data);
         });
     };
 

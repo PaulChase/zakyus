@@ -4,6 +4,7 @@ export default {
     getAllProjects: () => {
         return axios.get("/api/projects");
     },
+    getUserTasks: (projectID) => axios.get(`/api/usertasks/${projectID}`),
     getSinglePost: (id) => axios.get(`/api/posts/${id}`),
     addProject: (theProject) => axios.post(`/api/projects`, theProject),
     updatePost: (daPost, id) => axios.put(`/api/posts/${id}`, daPost),

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import { useNavigate } from "react-router-dom";
 
 const ProjectList = ({ projects }) => {
+    const navigate = useNavigate();
+
     return (
         <>
             <div className=" grid grid-cols-3 gap-4 my-5">
@@ -15,7 +18,16 @@ const ProjectList = ({ projects }) => {
                                 {project.name}
                             </h4>
                             <p>{project.description}</p>
-                            <button className=" bg-green-500 rounded-md px-2 py-2 font-semibold shadow-xl">
+                            <button
+                                onClick={() => {
+                                    localStorage.setItem(
+                                        "projectID",
+                                        project.id
+                                    );
+                                    navigate("/dashboard");
+                                }}
+                                className=" bg-green-500 rounded-md px-2 py-2 font-semibold shadow-xl"
+                            >
                                 Enter project
                             </button>
                         </div>

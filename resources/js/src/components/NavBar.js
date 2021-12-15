@@ -2,61 +2,35 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { useState, useEffect } from "react";
 
-const NavBar = ({ user, setLoggedInUser }) => {
+const NavBar = () => {
     const navigate = useNavigate();
 
-    // useEffect(async () => {
-    //     await api
-    //         .getLoggedInUser()
-    //         .then((res) => {
-    //             const loggedInUser = res.data.user;
-    //             setLoggedInUser(loggedInUser);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err.message);
-    //             navigate("/login");
-    //         });
-    // }, []);
     return (
-        <nav className="  w-full bg-yellow-500">
-            <div className=" flex justify-between items-center max-w-6xl mx-auto p-3 text-white">
-                <Link to="/" className=" font-bold text-2xl uppercase ">
-                    demsay
-                </Link>
-                <ul className=" flex space-x-3 justify-center items-center font-semibold">
-                    <Link to="/dashboard">Profile</Link>
-
-                    <Link to="/add">Add Post</Link>
-
-                    {user ? (
-                        user.name
-                    ) : (
-                        <>
-                            <Link to="/login">Login</Link>
-                            <Link
-                                to="/register"
-                                className=" px-3 py-1 bg-white rounded-md text-yellow-700"
-                            >
-                                Sign Up
-                            </Link>
-                        </>
-                    )}
-
-                    <button
-                        onClick={() => {
-                            api.loginOutUser()
-                                .then((res) => {
-                                    console.log(res);
-                                })
-                                .catch((err) =>
-                                    console.log(" unsuccessful " + err)
-                                );
-                        }}
-                    >
-                        Logout
-                    </button>
-                </ul>
+        <nav className="w-full bg-gray-700 text-white flex justify-between items-center p-3">
+            <div className=" flex space-x-4 justify-center items-baseline">
+                <h1 className=" text-xl uppercase font-bold text-green-500">
+                    Zakyus
+                </h1>
+                <p className=" text-sm">The TasksCollector</p>
             </div>
+            <div>
+                <form action="">
+                    <input
+                        type="text"
+                        className="  outline-none focus:ring-2 border border-gray-100 rounded-md p-2  mr-3 bg-gray-300 "
+                        // value={query}
+                        placeholder="Name of the project..."
+                        // onChange={(e) => setName(e.target.value)}
+                    />
+                    <button
+                        type="submit"
+                        className=" bg-green-500 rounded-md uppercase p-2 font-bold text-white"
+                    >
+                        Search
+                    </button>
+                </form>
+            </div>
+            <div className=" font-semibold text-lg">Twitter Clone</div>
         </nav>
     );
 };

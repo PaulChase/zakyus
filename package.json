@@ -25,6 +25,7 @@
         "tailwindcss": "^2.2.19"
     },
     "dependencies": {
+        "font-awesome": "^4.7.0",
         "react-router-dom": "^6.0.2"
     }
 }

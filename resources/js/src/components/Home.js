@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import ValidateUser from "./ValidateUser";
@@ -10,13 +9,13 @@ const Home = ({ setLoggedInUser, isLoggedIn, user }) => {
             <nav className=" flex justify-between p-6">
                 <div className=" flex space-x-4 justify-center items-baseline">
                     <h1 className=" text-4xl uppercase font-bold">Zakyus</h1>
-                    <p className=" text-sm">The TasksCollector</p>
+                    <p className=" text-sm"> The TasksCollector</p>
                 </div>
                 <div className=" flex justify-center  items-center space-x-3">
                     <Link to="/features">Features</Link>
                     <Link to="/about">About</Link>
                     <Link to="/services">Servcices</Link>
-                    <Link to="/contact">Contact Me</Link>
+                    <Link to="/dashboard"> Dashboard</Link>
                 </div>
             </nav>
             {/* the body */}
@@ -24,7 +23,7 @@ const Home = ({ setLoggedInUser, isLoggedIn, user }) => {
                 <div className=" grid grid-cols-6 gap-6">
                     <div className=" col-span-4 w-2/3 ">
                         <h3 className=" text-4xl mb-5 font-bold">
-                            The Simple Project Workflow and Tacks Management
+                            The Simple Project Workflow and Tasks Management
                             tool for Developers
                         </h3>
                         <p className=" text-lg ">
@@ -45,7 +44,8 @@ const Home = ({ setLoggedInUser, isLoggedIn, user }) => {
                                     className="bg-green-500 w-full rounded-md uppercase p-2 font-bold text-white"
                                 >
                                     {" "}
-                                    visit your profile
+                                    visit your profile{" "}
+                                    <i className=" fa fa-chevron-right ml-2"></i>
                                 </Link>
                             </div>
                         ) : (

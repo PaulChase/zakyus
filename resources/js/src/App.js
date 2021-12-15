@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import DashBoard from "./components/DashBoard";
 import api from "./api";
 import UserProfile from "./components/UserProfile";
+import "font-awesome/css/font-awesome.min.css";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -51,7 +52,7 @@ function App() {
                 <Route path="/posts/:id" element={<Show />} />
                 <Route path="/posts/:id/edit" element={<Edit />} />
                 <Route path="register" element={<RegisterPage />} />
-                <Route path="dashboard" element={<DashBoard />} />
+                <Route path="/dashboard" element={<DashBoard />} />
                 <Route path="/login" element={<LoginPage />} />
             </Routes>
         </Router>

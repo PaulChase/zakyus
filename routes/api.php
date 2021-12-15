@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::resource('tasks', TaskController::class);
+Route::get('/usertasks/{id}', [TaskController::class, 'getUserTasks']);
 Route::resource('projects', ProjectController::class);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

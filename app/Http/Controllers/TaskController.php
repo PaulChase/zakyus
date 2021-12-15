@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TaskCollection;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -13,7 +15,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return new TaskCollection(Task::get());
     }
 
     /**
@@ -34,7 +36,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+
+        ]);
+
+        $task = new Task;
+        $task->name = $request->input('name');
+        $task->status =   $request->input('status');
+        $task->project_id =  1;
+        $task->save();
+
+        return response()->json(['message' => 'success']);
     }
 
     /**
@@ -80,5 +93,10 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getUserTasks($id)
+    {
+        return new TaskCollection(Task::where('project_id', $id)->get());
     }
 }
