@@ -5650,6 +5650,8 @@ var DashBoard = function DashBoard() {
           title: "Tasks",
           color: "blue",
           buttonText: "start",
+          reverseTaskTo: "deleted",
+          reverseAction: "Delete",
           moveTaskTo: "motion",
           status: "initial",
           refreshTasks: function refreshTasks() {
@@ -5663,6 +5665,8 @@ var DashBoard = function DashBoard() {
           title: "In Progress",
           color: "yellow",
           buttonText: "Complete",
+          reverseTaskTo: "initial",
+          reverseAction: "Go back",
           moveTaskTo: "final",
           status: "motion",
           refreshTasks: function refreshTasks() {
@@ -5677,6 +5681,8 @@ var DashBoard = function DashBoard() {
           color: "green",
           buttonText: "Archive",
           moveTaskTo: "saved",
+          reverseTaskTo: "motion",
+          reverseAction: "Go back",
           status: "final",
           refreshTasks: function refreshTasks() {
             return setTaskAdded(!taskAdded);
@@ -6038,27 +6044,46 @@ var TaskItem = function TaskItem(_ref) {
       color = _ref.color,
       buttonText = _ref.buttonText,
       moveTaskTo = _ref.moveTaskTo,
-      refreshTasks = _ref.refreshTasks;
+      refreshTasks = _ref.refreshTasks,
+      reverseAction = _ref.reverseAction,
+      reverseTaskTo = _ref.reverseTaskTo;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: " border-l-4  rounded-md p-3 my-3 border-".concat(color, "-500 shadow"),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h4", {
       className: " font-semibold text-gray-600",
       children: task.name
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
-      className: "bg-".concat(color, "-200 px-3 py-1 rounded-md mt-3 shadow-inner border-2 border-").concat(color, "-500 text-").concat(color, "-700 focus:bg-").concat(color, "-400 focus:text-white"),
-      onClick: function onClick() {
-        _api__WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus({
-          id: task.id,
-          status: moveTaskTo
-        }).then(function (res) {
-          console.log(res);
-          refreshTasks();
-        })["catch"](function (err) {
-          return console.log(err);
-        });
-      },
-      children: [buttonText, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
-        className: " fa fa-chevron-right ml-2"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: " mt-3 grid grid-cols-2 gap-x-2",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+        className: "bg-".concat(color, "-200 px-3 py-1 rounded-md  shadow-inner border-2 border-").concat(color, "-500 text-").concat(color, "-700 focus:bg-").concat(color, "-400 focus:text-white"),
+        onClick: function onClick() {
+          _api__WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus({
+            id: task.id,
+            status: moveTaskTo
+          }).then(function (res) {
+            console.log(res);
+            refreshTasks();
+          })["catch"](function (err) {
+            return console.log(err);
+          });
+        },
+        children: [buttonText, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+          className: " fa fa-chevron-right ml-2"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        className: " text-gray-700 font-semibold focus:bg-gray-300 rounded-md px-3 py-1",
+        onClick: function onClick() {
+          _api__WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus({
+            id: task.id,
+            status: reverseTaskTo
+          }).then(function (res) {
+            console.log(res);
+            refreshTasks();
+          })["catch"](function (err) {
+            return console.log(err);
+          });
+        },
+        children: reverseAction
       })]
     })]
   });
@@ -6109,7 +6134,9 @@ var TaskList = function TaskList(_ref) {
       moveTaskTo = _ref.moveTaskTo,
       status = _ref.status,
       projectID = _ref.projectID,
-      refreshTasks = _ref.refreshTasks;
+      refreshTasks = _ref.refreshTasks,
+      reverseTaskTo = _ref.reverseTaskTo,
+      reverseAction = _ref.reverseAction;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -6147,7 +6174,9 @@ var TaskList = function TaskList(_ref) {
         color: color,
         buttonText: buttonText,
         moveTaskTo: moveTaskTo,
-        refreshTasks: refreshTasks
+        refreshTasks: refreshTasks,
+        reverseTaskTo: reverseTaskTo,
+        reverseAction: reverseAction
       }, task.id);
     }), !addTask && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
       onClick: function onClick() {

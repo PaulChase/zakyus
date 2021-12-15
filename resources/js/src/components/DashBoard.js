@@ -40,6 +40,8 @@ const DashBoard = () => {
                             title="Tasks"
                             color="blue"
                             buttonText="start"
+                            reverseTaskTo="deleted"
+                            reverseAction="Delete"
                             moveTaskTo="motion"
                             status="initial"
                             refreshTasks={() => setTaskAdded(!taskAdded)}
@@ -52,6 +54,8 @@ const DashBoard = () => {
                             title="In Progress"
                             color="yellow"
                             buttonText="Complete"
+                            reverseTaskTo="initial"
+                            reverseAction="Go back"
                             moveTaskTo="final"
                             status="motion"
                             refreshTasks={() => setTaskAdded(!taskAdded)}
@@ -65,6 +69,8 @@ const DashBoard = () => {
                             color="green"
                             buttonText="Archive"
                             moveTaskTo="saved"
+                            reverseTaskTo="motion"
+                            reverseAction="Go back"
                             status="final"
                             refreshTasks={() => setTaskAdded(!taskAdded)}
                         />

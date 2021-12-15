@@ -11,6 +11,8 @@ const TaskList = ({
     status,
     projectID,
     refreshTasks,
+    reverseTaskTo,
+    reverseAction,
 }) => {
     const [addTask, setAddTask] = useState(false);
     const [name, setName] = useState("");
@@ -39,6 +41,8 @@ const TaskList = ({
                         buttonText={buttonText}
                         moveTaskTo={moveTaskTo}
                         refreshTasks={refreshTasks}
+                        reverseTaskTo={reverseTaskTo}
+                        reverseAction={reverseAction}
                     />
                 ))}
 
