@@ -17,6 +17,7 @@ const TaskList = ({
     const [addTask, setAddTask] = useState(false);
     const [name, setName] = useState("");
 
+    // add task to the database with the current user
     const handleAddTask = (e) => {
         e.preventDefault();
 
@@ -46,6 +47,7 @@ const TaskList = ({
                     />
                 ))}
 
+            {/* open the form to add task */}
             {!addTask && (
                 <button
                     onClick={() => setAddTask(true)}

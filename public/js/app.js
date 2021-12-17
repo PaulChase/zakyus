@@ -5321,13 +5321,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _components_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Home */ "./resources/js/src/components/Home.js");
 /* harmony import */ var _components_NavBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/NavBar */ "./resources/js/src/components/NavBar.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _components_DashBoard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/DashBoard */ "./resources/js/src/components/DashBoard.js");
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./api */ "./resources/js/src/api.js");
 /* harmony import */ var _components_UserProfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/UserProfile */ "./resources/js/src/components/UserProfile.js");
 /* harmony import */ var font_awesome_css_font_awesome_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! font-awesome/css/font-awesome.min.css */ "./node_modules/font-awesome/css/font-awesome.min.css");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_IsLoading__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/IsLoading */ "./resources/js/src/components/IsLoading.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5353,6 +5354,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 function App() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5364,36 +5367,56 @@ function App() {
       isLoggedIn = _useState4[0],
       setIsLoggedIn = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isLoading = _useState6[0],
+      setIsLoading = _useState6[1];
+
   var checkIfUserIsLOggedIn = function checkIfUserIsLOggedIn() {
     _api__WEBPACK_IMPORTED_MODULE_5__["default"].getLoggedInUser().then(function (res) {
+      setIsLoading(false);
+      sessionStorage.setItem("user", JSON.stringify(res.data.user));
+      sessionStorage.setItem("isLoggedIn", true);
       setUser(res.data.user);
       setIsLoggedIn(true);
+    })["catch"](function (err) {
+      setIsLoading(false);
+      console.log(err);
     });
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     return checkIfUserIsLOggedIn();
   }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_Home__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          setLoggedInUser: function setLoggedInUser(user) {
-            return setUser(user);
-          },
-          isLoggedIn: isLoggedIn,
-          user: user
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/profile",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_UserProfile__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          user: user
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/dashboard",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_DashBoard__WEBPACK_IMPORTED_MODULE_4__["default"], {})
-      })]
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.BrowserRouter, {
+    children: isLoading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+      className: " bg-gray-800 fixed top-0 left-0 w-full h-full opacity-80 flex justify-center items-center text-white",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_IsLoading__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        message: "One moment please..."
+      })
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_Home__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            setLoggedInUser: function setLoggedInUser(user) {
+              return setUser(user);
+            },
+            isLoggedIn: isLoggedIn,
+            user: user
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/profile",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_UserProfile__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            user: user
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
+          path: "/dashboard",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_components_DashBoard__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            user: user
+          })
+        })]
+      })
     })
   });
 }
@@ -5401,7 +5424,7 @@ function App() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
 if (document.getElementById("example")) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(App, {}), document.getElementById("example"));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(App, {}), document.getElementById("example"));
 }
 
 /***/ }),
@@ -5493,7 +5516,8 @@ var AddProject = function AddProject(_ref) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
       _useState4 = _slicedToArray(_useState3, 2),
       description = _useState4[0],
-      setDescription = _useState4[1];
+      setDescription = _useState4[1]; // add the project the user profile and reload the user projects after the request is successful
+
 
   var handleAddProject = function handleAddProject(e) {
     e.preventDefault();
@@ -5518,7 +5542,7 @@ var AddProject = function AddProject(_ref) {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           onClick: closeForm,
-          className: " font-extrabold text-xl float-right",
+          className: " font-extrabold text-xl float-right focus:bg-gray-500 p-2",
           children: "X"
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
@@ -5535,7 +5559,8 @@ var AddProject = function AddProject(_ref) {
           placeholder: "Name of the project...",
           onChange: function onChange(e) {
             return setName(e.target.value);
-          }
+          },
+          required: true
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
           name: "",
           id: "",
@@ -5558,6 +5583,58 @@ var AddProject = function AddProject(_ref) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddProject);
+
+/***/ }),
+
+/***/ "./resources/js/src/components/ArchiveList.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/components/ArchiveList.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TaskItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TaskItem */ "./resources/js/src/components/TaskItem.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+var ArchiveList = function ArchiveList(_ref) {
+  var changeMenu = _ref.changeMenu,
+      tasks = _ref.tasks,
+      refreshTasks = _ref.refreshTasks;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    className: " p-2 text-white",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+      className: " cursor-pointer",
+      onClick: function onClick() {
+        return changeMenu();
+      },
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+        className: "fa fa-chevron-left mr-2 block"
+      }), "back"]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h3", {
+      className: " font-bold text-xl text-center mt-3",
+      children: "Archive Tasks"
+    }), tasks && tasks.map(function (task) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_TaskItem__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        task: task,
+        color: "gray",
+        buttonText: "Delete",
+        moveTaskTo: "deleted",
+        refreshTasks: refreshTasks,
+        reverseTaskTo: "initial",
+        reverseAction: "Go back"
+      }, task.id);
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ArchiveList);
 
 /***/ }),
 
@@ -5621,16 +5698,32 @@ var DashBoard = function DashBoard() {
       isLoading = _useState8[0],
       setIsLoading = _useState8[1];
 
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+      _useState10 = _slicedToArray(_useState9, 2),
+      currentProject = _useState10[0],
+      setCurrentProject = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      user = _useState12[0],
+      setUser = _useState12[1]; // get the users's project tasks
+
+
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    var loggedInUser = JSON.parse(sessionStorage.getItem("user"));
     var getProjectID = localStorage.getItem("projectID");
+    setUser(loggedInUser);
     setProjectID(getProjectID);
     getAllTasks(getProjectID);
   }, [taskAdded]);
 
   var getAllTasks = function getAllTasks(getProjectID) {
     _api__WEBPACK_IMPORTED_MODULE_3__["default"].getUserTasks(getProjectID).then(function (res) {
+      var project = res.data.project;
+      var projectTasks = res.data.tasks;
       setIsLoading(false);
-      setTasks(res.data.data); // console.log(res.data.data);
+      setCurrentProject(project);
+      setTasks(projectTasks); // console.log(res);
     });
   };
 
@@ -5638,10 +5731,12 @@ var DashBoard = function DashBoard() {
     className: "  flex bg-gray-400 h-auto",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       className: " w-full mr-80",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NavBar__WEBPACK_IMPORTED_MODULE_0__["default"], {}), isLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_IsLoading__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NavBar__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        currentProject: currentProject
+      }), isLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_IsLoading__WEBPACK_IMPORTED_MODULE_5__["default"], {
         message: "Getting your tasks"
       }), tasks && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: " grid grid-cols-3 gap-4 p-3 ",
+        className: " grid grid-cols-3 gap-4 p-3 text-gray-700 ",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_TaskList__WEBPACK_IMPORTED_MODULE_4__["default"], {
           tasks: tasks.filter(function (task) {
             return task.status == "initial";
@@ -5690,7 +5785,17 @@ var DashBoard = function DashBoard() {
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_SideBar__WEBPACK_IMPORTED_MODULE_1__["default"], {})
+      className: "fixed w-80 top-0 right-0 bg-gray-800 shadow-2xl text-white text-lg h-screen overflow-auto",
+      children: tasks && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_SideBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        user: user,
+        refreshTasks: function refreshTasks() {
+          setIsLoading(true);
+          setTaskAdded(!taskAdded);
+        },
+        tasks: tasks.filter(function (task) {
+          return task.status == "saved";
+        })
+      })
     })]
   });
 };
@@ -5811,12 +5916,12 @@ __webpack_require__.r(__webpack_exports__);
 var IsLoading = function IsLoading(_ref) {
   var message = _ref.message;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: " bg-gray-800 flex justify-center items-center text-white h-full w-full",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("svg", {
-      className: "animate-spin h-20 w-20 mb-4 ",
-      viewBox: "0 0 24 24"
+    className: "  mt-6",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
+      className: " w-16 h-16 border-t-4 border-b-4   border-green-500 border-solid rounded-full animate-spin mb-3 mx-auto",
+      children: " "
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
-      className: " font-semibold text-xl",
+      className: "text-center font-semibold text-xl ",
       children: message
     })]
   });
@@ -5847,7 +5952,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var NavBar = function NavBar() {
+var NavBar = function NavBar(_ref) {
+  var currentProject = _ref.currentProject;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("nav", {
     className: "w-full bg-gray-700 text-white flex justify-between items-center p-3",
@@ -5877,7 +5983,7 @@ var NavBar = function NavBar() {
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: " font-semibold text-lg",
-      children: "Twitter Clone"
+      children: currentProject && currentProject.name
     })]
   });
 };
@@ -5942,6 +6048,97 @@ var ProjectList = function ProjectList(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/src/components/ProjectMenu.js":
+/*!****************************************************!*\
+  !*** ./resources/js/src/components/ProjectMenu.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api */ "./resources/js/src/api.js");
+/* harmony import */ var _IsLoading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IsLoading */ "./resources/js/src/components/IsLoading.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+ // the list of the users projects in the side bar for easy access
+
+
+
+
+var ProjectMenu = function ProjectMenu(_ref) {
+  var changeMenu = _ref.changeMenu,
+      refreshTasks = _ref.refreshTasks;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      projects = _useState2[0],
+      setProjects = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    _api__WEBPACK_IMPORTED_MODULE_1__["default"].getAllProjects().then(function (res) {
+      setIsLoading(false);
+      setProjects(res.data);
+    });
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    className: " p-2",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+      className: " cursor-pointer",
+      onClick: function onClick() {
+        return changeMenu();
+      },
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+        className: "fa fa-chevron-left mr-2 block"
+      }), "back"]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
+      className: " font-bold text-xl text-center mt-3",
+      children: "Projects"
+    }), isLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IsLoading__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      message: "Getting your projects"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
+      children: projects && projects.map(function (project) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("li", {
+          className: " px-4 py-2 font-semibold hover:bg-gray-600 cursor-pointer",
+          onClick: function onClick() {
+            localStorage.setItem("projectID", project.id);
+            refreshTasks();
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            className: " font-semibold text-gray-500 mr-3",
+            children: "#"
+          }), project.name]
+        }, project.id);
+      })
+    })]
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProjectMenu);
+
+/***/ }),
+
 /***/ "./resources/js/src/components/SideBar.js":
 /*!************************************************!*\
   !*** ./resources/js/src/components/SideBar.js ***!
@@ -5955,67 +6152,125 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./resources/js/src/api.js");
 /* harmony import */ var _avatar_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../avatar.jpg */ "./resources/js/src/avatar.jpg");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _ProjectMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProjectMenu */ "./resources/js/src/components/ProjectMenu.js");
+/* harmony import */ var _ArchiveList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ArchiveList */ "./resources/js/src/components/ArchiveList.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
 
 
-var SideBar = function SideBar() {
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: " fixed w-80 top-0 right-0 bg-gray-800 shadow-2xl text-white text-lg h-screen",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: " text-center p-6",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-        src: _avatar_jpg__WEBPACK_IMPORTED_MODULE_1__["default"],
-        className: " w-44 h-44 rounded-full mx-auto"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h3", {
-        className: " font-semibold text-lg my-3",
-        children: "Guest two"
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-        className: " text-gray-400 p-3",
-        children: "Menu"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
-        className: " cursor-pointer",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-          className: " px-4 py-2 font-semibold hover:bg-gray-600",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
-            className: "fa fa-user mr-4"
-          }), "Profile"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-          className: " px-4 py-2 font-semibold hover:bg-gray-600",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
-            className: "fa fa-cubes mr-4"
-          }), "Projects"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-          className: " px-4 py-2 font-semibold hover:bg-gray-600",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
-            className: "fa fa-folder-open mr-4"
-          }), "Archive"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-          className: " px-4 py-2 font-semibold hover:bg-gray-600",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
-            className: "fa fa-photo mr-4"
-          }), "Wallpapers"]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("li", {
-          className: " px-4 py-2 font-semibold hover:bg-gray-600",
-          onClick: function onClick() {
-            _api__WEBPACK_IMPORTED_MODULE_0__["default"].loginOutUser().then(function (res) {
-              navigate("/");
-            });
-          },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
-            className: "fa fa-reply mr-4"
-          }), "Logout"]
+
+
+
+
+var SideBar = function SideBar(_ref) {
+  var user = _ref.user,
+      refreshTasks = _ref.refreshTasks,
+      tasks = _ref.tasks;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      menu = _useState2[0],
+      setMenu = _useState2[1];
+
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
+  var name = user.name; // switch between menus on the sidebar
+
+  switch (menu) {
+    case "projects":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProjectMenu__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        changeMenu: function changeMenu() {
+          return setMenu(null);
+        },
+        refreshTasks: refreshTasks
+      });
+      break;
+
+    case "archive":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ArchiveList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        tasks: tasks,
+        changeMenu: function changeMenu() {
+          return setMenu(null);
+        },
+        refreshTasks: refreshTasks
+      });
+      break;
+
+    default:
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: " ",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: " text-center p-6",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: " bg-blue-500 rounded-full p-8 w-40 h-40 mx-auto text-4xl font-extrabold flex justify-center items-center",
+            children: name.slice(0, 1).toUpperCase()
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+            className: " font-semibold text-lg my-3",
+            children: user && name
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h4", {
+            className: " text-gray-400 p-3",
+            children: "Menu"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("ul", {
+            className: " cursor-pointer",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("li", {
+              className: " px-4 py-2 font-semibold hover:bg-gray-600",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa fa-user mr-4"
+              }), "Profile"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("li", {
+              className: " px-4 py-2 font-semibold hover:bg-gray-600",
+              onClick: function onClick() {
+                return setMenu("projects");
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa fa-cubes mr-4"
+              }), "Projects"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("li", {
+              className: " px-4 py-2 font-semibold hover:bg-gray-600",
+              onClick: function onClick() {
+                return setMenu("archive");
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa fa-folder-open mr-4"
+              }), "Archive"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("li", {
+              className: " px-4 py-2 font-semibold hover:bg-gray-600",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa fa-photo mr-4"
+              }), "Wallpapers"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("li", {
+              className: " px-4 py-2 font-semibold hover:bg-gray-600",
+              onClick: function onClick() {
+                _api__WEBPACK_IMPORTED_MODULE_0__["default"].loginOutUser().then(function (res) {
+                  navigate("/");
+                });
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "fa fa-reply mr-4"
+              }), "Logout"]
+            })]
+          })]
         })]
-      })]
-    })]
-  });
+      });
+      break;
+  }
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SideBar);
@@ -6050,12 +6305,13 @@ var TaskItem = function TaskItem(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: " border-l-4  rounded-md p-3 my-3 border-".concat(color, "-500 shadow"),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h4", {
-      className: " font-semibold text-gray-600",
+      className: " font-semibold ",
       children: task.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: " mt-3 grid grid-cols-2 gap-x-2",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
-        className: "bg-".concat(color, "-200 px-3 py-1 rounded-md  shadow-inner border-2 border-").concat(color, "-500 text-").concat(color, "-700 focus:bg-").concat(color, "-400 focus:text-white"),
+        className: "bg-".concat(color, "-200 px-2 py-1 rounded-md  shadow-inner border-2 border-").concat(color, "-500 text-").concat(color, "-700 focus:bg-").concat(color, "-400 focus:text-white w-auto ") // move the task to the next list on the board
+        ,
         onClick: function onClick() {
           _api__WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus({
             id: task.id,
@@ -6071,7 +6327,8 @@ var TaskItem = function TaskItem(_ref) {
           className: " fa fa-chevron-right ml-2"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
-        className: " text-gray-700 font-semibold focus:bg-gray-300 rounded-md px-3 py-1",
+        className: " font-semibold focus:bg-gray-300 rounded-md px-3 py-1" // move the task to the previous list or if it's in the first list, delete the task
+        ,
         onClick: function onClick() {
           _api__WEBPACK_IMPORTED_MODULE_0__["default"].changeTaskStatus({
             id: task.id,
@@ -6146,7 +6403,8 @@ var TaskList = function TaskList(_ref) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
       _useState4 = _slicedToArray(_useState3, 2),
       name = _useState4[0],
-      setName = _useState4[1];
+      setName = _useState4[1]; // add task to the database with the current user
+
 
   var handleAddTask = function handleAddTask(e) {
     e.preventDefault();
@@ -6256,9 +6514,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var UserProfile = function UserProfile(_ref) {
-  var user = _ref.user;
-
+var UserProfile = function UserProfile() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
       showForm = _useState2[0],
@@ -6274,6 +6530,11 @@ var UserProfile = function UserProfile(_ref) {
       isLoading = _useState6[0],
       setIsLoading = _useState6[1];
 
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      user = _useState8[0],
+      setUser = _useState8[1];
+
   var getUserProjects = function getUserProjects() {
     _api__WEBPACK_IMPORTED_MODULE_1__["default"].getAllProjects().then(function (res) {
       var projects = res.data;
@@ -6283,7 +6544,10 @@ var UserProfile = function UserProfile(_ref) {
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    return getUserProjects();
+    var loggedInUser = JSON.parse(sessionStorage.getItem("user")); // console.log(loggedInUser);
+
+    setUser(loggedInUser);
+    getUserProjects();
   }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("main", {
     className: " bg-gray-600  text-white ",
@@ -6300,13 +6564,13 @@ var UserProfile = function UserProfile(_ref) {
           className: " flex mb-5",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: " bg-blue-500 rounded-full p-10 w-16 h-16 mr-4 text-3xl font-extrabold flex justify-center items-center",
-            children: "M"
+            children: user && user.name.slice(0, 1).toUpperCase()
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
               className: " mb-2 font-semibold text-lg",
-              children: user.name
+              children: user && user.name
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-              children: user.email
+              children: user && user.email
             })]
           })]
         })]
@@ -6333,7 +6597,7 @@ var UserProfile = function UserProfile(_ref) {
           children: "Add new Project"
         })]
       }), isLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_IsLoading__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        message: "Getting your tasks"
+        message: "Getting your projects"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProjectList__WEBPACK_IMPORTED_MODULE_3__["default"], {
         projects: projects
       })]
@@ -6410,7 +6674,7 @@ var ValidateUser = function ValidateUser(_ref) {
       form = _useState8[0],
       SetForm = _useState8[1];
 
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)(); // register the user and send the user to their profile page
 
   var handleRegisterUser = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(e) {
@@ -6466,7 +6730,8 @@ var ValidateUser = function ValidateUser(_ref) {
     return function handleRegisterUser(_x) {
       return _ref2.apply(this, arguments);
     };
-  }();
+  }(); // login the user and redirect the logged in user to their profile page
+
 
   var handleLoginUser = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {

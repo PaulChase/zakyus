@@ -4,10 +4,11 @@ import AddProject from "./AddProject";
 import ProjectList from "./ProjectList";
 import IsLoading from "./IsLoading";
 
-const UserProfile = ({ user }) => {
+const UserProfile = () => {
     const [showForm, setShowForm] = useState(false);
     const [projects, setProjects] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     const getUserProjects = () => {
         api.getAllProjects().then((res) => {
@@ -19,7 +20,12 @@ const UserProfile = ({ user }) => {
         });
     };
 
-    useEffect(() => getUserProjects(), []);
+    useEffect(() => {
+        const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+        // console.log(loggedInUser);
+        setUser(loggedInUser);
+        getUserProjects();
+    }, []);
 
     return (
         <main className=" bg-gray-600  text-white ">
@@ -31,13 +37,13 @@ const UserProfile = ({ user }) => {
                     </h3>
                     <div className=" flex mb-5">
                         <div className=" bg-blue-500 rounded-full p-10 w-16 h-16 mr-4 text-3xl font-extrabold flex justify-center items-center">
-                            M
+                            {user && user.name.slice(0, 1).toUpperCase()}
                         </div>
                         <div>
                             <h3 className=" mb-2 font-semibold text-lg">
-                                {user.name}
+                                {user && user.name}
                             </h3>
-                            <p>{user.email}</p>
+                            <p>{user && user.email}</p>
                         </div>
                     </div>
                 </div>
@@ -60,7 +66,7 @@ const UserProfile = ({ user }) => {
                         Add new Project
                     </button>
                 </div>
-                {isLoading && <IsLoading message="Getting your tasks" />}
+                {isLoading && <IsLoading message="Getting your projects" />}
                 <ProjectList projects={projects} />
             </div>
         </main>

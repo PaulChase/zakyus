@@ -5,6 +5,7 @@ const AddProject = ({ closeForm, refreshUserProjects }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
+    // add the project the user profile and reload the user projects after the request is successful
     const handleAddProject = (e) => {
         e.preventDefault();
 
@@ -27,7 +28,7 @@ const AddProject = ({ closeForm, refreshUserProjects }) => {
                 <p>
                     <button
                         onClick={closeForm}
-                        className=" font-extrabold text-xl float-right"
+                        className=" font-extrabold text-xl float-right focus:bg-gray-500 p-2"
                     >
                         X
                     </button>
@@ -46,6 +47,7 @@ const AddProject = ({ closeForm, refreshUserProjects }) => {
                         value={name}
                         placeholder="Name of the project..."
                         onChange={(e) => setName(e.target.value)}
+                        required
                     />
                     <textarea
                         name=""

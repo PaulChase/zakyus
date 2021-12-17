@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { useState, useEffect } from "react";
 
-const NavBar = () => {
+const NavBar = ({ currentProject }) => {
     const navigate = useNavigate();
 
     return (
@@ -30,7 +30,9 @@ const NavBar = () => {
                     </button>
                 </form>
             </div>
-            <div className=" font-semibold text-lg">Twitter Clone</div>
+            <div className=" font-semibold text-lg">
+                {currentProject && currentProject.name}
+            </div>
         </nav>
     );
 };

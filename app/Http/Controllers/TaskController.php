@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TaskCollection;
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -97,9 +98,15 @@ class TaskController extends Controller
 
     public function getUserTasks($id)
     {
-        return new TaskCollection(Task::where('project_id', $id)->orderBy('updated_at', 'desc')->get());
+        $project = Project::find($id);
+        $tasks = $project->tasks()->where('project_id', $id)->orderBy('updated_at', 'desc')->get();
+        return response()->json([
+            'project' => $project,
+            'tasks' => $tasks
+        ]);
     }
 
+    // change the task's status based on the status input received
     public function changeTaskStatus(Request $request)
     {
         $taskID = $request->input('id');

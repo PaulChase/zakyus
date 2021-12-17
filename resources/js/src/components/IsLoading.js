@@ -1,12 +1,11 @@
 const IsLoading = ({ message }) => {
     return (
-        <div className=" bg-gray-800 flex justify-center items-center text-white h-full w-full">
-            <svg
-                className="animate-spin h-20 w-20 mb-4 "
-                viewBox="0 0 24 24"
-            ></svg>
+        <div className="  mt-6">
+            <div className=" w-16 h-16 border-t-4 border-b-4   border-green-500 border-solid rounded-full animate-spin mb-3 mx-auto">
+                {" "}
+            </div>
             <br />
-            <h3 className=" font-semibold text-xl">{message}</h3>
+            <h3 className="text-center font-semibold text-xl ">{message}</h3>
         </div>
     );
 };

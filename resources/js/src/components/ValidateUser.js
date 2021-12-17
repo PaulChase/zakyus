@@ -9,6 +9,7 @@ const ValidateUser = ({ setLoggedInUser }) => {
     const [form, SetForm] = useState("signup");
     const navigate = useNavigate();
 
+    // register the user and send the user to their profile page
     const handleRegisterUser = async (e) => {
         e.preventDefault();
 
@@ -25,6 +26,7 @@ const ValidateUser = ({ setLoggedInUser }) => {
         });
     };
 
+    // login the user and redirect the logged in user to their profile page
     const handleLoginUser = async (e) => {
         e.preventDefault();
 

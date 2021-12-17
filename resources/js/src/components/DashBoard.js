@@ -10,28 +10,40 @@ const DashBoard = () => {
     const [projectID, setProjectID] = useState(null);
     const [taskAdded, setTaskAdded] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentProject, setCurrentProject] = useState(null);
+    const [user, setUser] = useState(null);
 
+    // get the users's project tasks
     useEffect(() => {
+        const loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+
         const getProjectID = localStorage.getItem("projectID");
+        setUser(loggedInUser);
+
         setProjectID(getProjectID);
         getAllTasks(getProjectID);
     }, [taskAdded]);
 
     const getAllTasks = (getProjectID) => {
         api.getUserTasks(getProjectID).then((res) => {
+            const project = res.data.project;
+            const projectTasks = res.data.tasks;
             setIsLoading(false);
-            setTasks(res.data.data);
 
-            // console.log(res.data.data);
+            setCurrentProject(project);
+            setTasks(projectTasks);
+
+            // console.log(res);
         });
     };
     return (
         <div className="  flex bg-gray-400 h-auto">
             <div className=" w-full mr-80">
-                <NavBar />
+                <NavBar currentProject={currentProject} />
                 {isLoading && <IsLoading message="Getting your tasks" />}
                 {tasks && (
-                    <div className=" grid grid-cols-3 gap-4 p-3 ">
+                    <div className=" grid grid-cols-3 gap-4 p-3 text-gray-700 ">
+                        {/* filter task list based on the status of the task */}
                         <TaskList
                             tasks={tasks.filter(
                                 (task) => task.status == "initial"
@@ -78,8 +90,17 @@ const DashBoard = () => {
                 )}
             </div>
 
-            <div>
-                <SideBar />
+            <div className="fixed w-80 top-0 right-0 bg-gray-800 shadow-2xl text-white text-lg h-screen overflow-auto">
+                {tasks && (
+                    <SideBar
+                        user={user}
+                        refreshTasks={() => {
+                            setIsLoading(true);
+                            setTaskAdded(!taskAdded);
+                        }}
+                        tasks={tasks.filter((task) => task.status == "saved")}
+                    />
+                )}
             </div>
         </div>
     );
