@@ -3,12 +3,14 @@ import api from "../api";
 import AddProject from "./AddProject";
 import ProjectList from "./ProjectList";
 import IsLoading from "./IsLoading";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
     const [showForm, setShowForm] = useState(false);
     const [projects, setProjects] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     const getUserProjects = () => {
         api.getAllProjects().then((res) => {
@@ -31,8 +33,15 @@ const UserProfile = () => {
         <main className=" bg-gray-600  text-white ">
             <nav className=" p-8 bg-gray-800">
                 <div className=" max-w-4xl mx-auto">
+                    <button
+                        className=" cursor-pointer mb-2 text-lg font-bold"
+                        onClick={() => navigate(-1)}
+                    >
+                        <span className="fa fa-chevron-left mr-2 block "></span>
+                        back
+                    </button>
                     <h3 className=" text-2xl text-center my-3 font-bold">
-                        <i className=" fa fa-user fa-2x mr-2"></i>
+                        <i className=" fa fa-user fa-2x mr-2 block"></i>
                         Welcome to your profile
                     </h3>
                     <div className=" flex mb-5">

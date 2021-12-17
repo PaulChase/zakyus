@@ -99,6 +99,9 @@ class TaskController extends Controller
     public function getUserTasks($id)
     {
         $project = Project::find($id);
+        if (auth()->id() != $project->user->id) {
+            return response()->json(['message' => 'unathorised'], 401);
+        }
         $tasks = $project->tasks()->where('project_id', $id)->orderBy('updated_at', 'desc')->get();
         return response()->json([
             'project' => $project,

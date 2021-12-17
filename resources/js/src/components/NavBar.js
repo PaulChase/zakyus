@@ -9,6 +9,7 @@ const NavBar = ({ currentProject }) => {
         <nav className="w-full bg-gray-700 text-white flex justify-between items-center p-3">
             <div className=" flex space-x-4 justify-center items-baseline">
                 <h1 className=" text-xl uppercase font-bold text-green-500">
+                    <i className="fa fa-list-alt mr-2"></i>
                     Zakyus
                 </h1>
                 <p className=" text-sm">The TasksCollector</p>

@@ -25,19 +25,21 @@ const DashBoard = () => {
     }, [taskAdded]);
 
     const getAllTasks = (getProjectID) => {
-        api.getUserTasks(getProjectID).then((res) => {
-            const project = res.data.project;
-            const projectTasks = res.data.tasks;
-            setIsLoading(false);
+        api.getUserTasks(getProjectID)
+            .then((res) => {
+                const project = res.data.project;
+                const projectTasks = res.data.tasks;
+                setIsLoading(false);
 
-            setCurrentProject(project);
-            setTasks(projectTasks);
+                setCurrentProject(project);
+                setTasks(projectTasks);
 
-            // console.log(res);
-        });
+                // console.log(res);
+            })
+            .catch((err) => console.log(err));
     };
     return (
-        <div className="  flex bg-gray-400 h-auto">
+        <div className="  flex  ">
             <div className=" w-full mr-80">
                 <NavBar currentProject={currentProject} />
                 {isLoading && <IsLoading message="Getting your tasks" />}

@@ -14,7 +14,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::get();
+        return auth()->user()->projects()->orderBy('created_at', 'desc')->get();
     }
 
     /**
@@ -43,7 +43,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->name = $request->input('name');
         $project->description = $request->input('description');
-        $project->user_id = 1;
+        $project->user_id = auth()->id();
         $project->save();
 
         return response()->json(['message' => 'success']);

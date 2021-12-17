@@ -72,7 +72,7 @@ const TaskList = ({
                     <div className=" grid grid-cols-2 gap-3 my-2">
                         <button
                             type="submit"
-                            className=" bg-green-500 w-full rounded-md uppercase p-2 font-bold text-white text-center"
+                            className=" bg-green-500 focus:bg-green-700 w-full rounded-md uppercase p-2 font-bold text-white text-center"
                         >
                             Submit task
                         </button>

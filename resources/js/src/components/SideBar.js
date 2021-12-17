@@ -1,5 +1,4 @@
 import api from "../api";
-import img from "../avatar.jpg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ProjectMenu from "./ProjectMenu";
@@ -44,7 +43,17 @@ const SideBar = ({ user, refreshTasks, tasks }) => {
                     <div>
                         <h4 className=" text-gray-400 p-3">Menu</h4>
                         <ul className=" cursor-pointer">
-                            <li className=" px-4 py-2 font-semibold hover:bg-gray-600">
+                            <li
+                                className=" px-4 py-2 font-semibold hover:bg-gray-600"
+                                onClick={() => navigate("/")}
+                            >
+                                <i className="fa fa-home mr-4"></i>
+                                Home
+                            </li>
+                            <li
+                                className=" px-4 py-2 font-semibold hover:bg-gray-600"
+                                onClick={() => navigate("/profile")}
+                            >
                                 <i className="fa fa-user mr-4"></i>
                                 Profile
                             </li>
@@ -62,14 +71,12 @@ const SideBar = ({ user, refreshTasks, tasks }) => {
                                 <i className="fa fa-folder-open mr-4"></i>
                                 Archive
                             </li>
-                            <li className=" px-4 py-2 font-semibold hover:bg-gray-600">
-                                <i className="fa fa-photo mr-4"></i>
-                                Wallpapers
-                            </li>
+
                             <li
                                 className=" px-4 py-2 font-semibold hover:bg-gray-600"
                                 onClick={() => {
                                     api.loginOutUser().then((res) => {
+                                        sessionStorage.clear();
                                         navigate("/");
                                     });
                                 }}

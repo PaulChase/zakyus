@@ -4,16 +4,20 @@ import api from "../api";
 const AddProject = ({ closeForm, refreshUserProjects }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [isPending, setIsPending] = useState(false);
 
     // add the project the user profile and reload the user projects after the request is successful
     const handleAddProject = (e) => {
         e.preventDefault();
+        setIsPending(true);
 
         const project = { name, description };
 
         console.log(project);
 
         api.addProject(project).then((res) => {
+            setIsPending(false);
+
             closeForm();
             refreshUserProjects();
         });
@@ -59,12 +63,22 @@ const AddProject = ({ closeForm, refreshUserProjects }) => {
                         placeholder="Add a fun  description of the project (optional)..."
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
-                    <button
-                        type="submit"
-                        className=" bg-green-500 w-full rounded-md uppercase p-2 font-bold text-white"
-                    >
-                        Add Project
-                    </button>
+                    {isPending ? (
+                        <button
+                            type="submit"
+                            disabled
+                            className=" bg-green-400 w-full rounded-md uppercase p-2 font-bold text-white"
+                        >
+                            Adding Project...
+                        </button>
+                    ) : (
+                        <button
+                            type="submit"
+                            className=" bg-green-500 w-full rounded-md uppercase p-2 font-bold text-white focus:bg-green-700"
+                        >
+                            Add Project
+                        </button>
+                    )}
                 </form>
             </div>
         </div>

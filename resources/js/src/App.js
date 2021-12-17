@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Home from "./components/Home";
-import NavBar from "./components/NavBar";
 import {
     BrowserRouter as Router,
     Route,
@@ -15,6 +14,8 @@ import api from "./api";
 import UserProfile from "./components/UserProfile";
 import "font-awesome/css/font-awesome.min.css";
 import IsLoading from "./components/IsLoading";
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./components/NotFound";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -32,16 +33,18 @@ function App() {
             })
             .catch((err) => {
                 setIsLoading(false);
+                setIsLoggedIn(false);
+
                 console.log(err);
             });
     };
 
-    useEffect(() => checkIfUserIsLOggedIn(), []);
+    useEffect(() => checkIfUserIsLOggedIn(), [isLoggedIn]);
 
     return (
         <Router>
             {isLoading ? (
-                <div className=" bg-gray-800 fixed top-0 left-0 w-full h-full opacity-80 flex justify-center items-center text-white">
+                <div className=" bg-gray-800 fixed top-0 left-0 w-full h-full  flex justify-center items-center text-white">
                     <IsLoading message="One moment please..." />
                 </div>
             ) : (
@@ -53,18 +56,28 @@ function App() {
                                 <Home
                                     setLoggedInUser={(user) => setUser(user)}
                                     isLoggedIn={isLoggedIn}
+                                    setAuthStatus={() => setIsLoggedIn(true)}
                                     user={user}
                                 />
                             }
                         />
                         <Route
                             path="/profile"
-                            element={<UserProfile user={user} />}
+                            element={
+                                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                                    <UserProfile />{" "}
+                                </ProtectedRoute>
+                            }
                         />
                         <Route
                             path="/dashboard"
-                            element={<DashBoard user={user} />}
+                            element={
+                                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                                    <DashBoard />{" "}
+                                </ProtectedRoute>
+                            }
                         />
+                        <Route path="/*" element={<NotFound />} />
                     </Routes>
                 </>
             )}

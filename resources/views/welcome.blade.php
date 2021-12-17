@@ -22,7 +22,7 @@
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased bg-gray-400">
     <div id="example"></div>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>

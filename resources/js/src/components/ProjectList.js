@@ -26,7 +26,7 @@ const ProjectList = ({ projects }) => {
                                     );
                                     navigate("/dashboard");
                                 }}
-                                className=" bg-green-500 rounded-md px-2 py-2 font-semibold shadow-xl"
+                                className=" bg-green-500 focus:bg-green-700 rounded-md px-2 py-2 font-semibold shadow-xl"
                             >
                                 Enter project{" "}
                                 <i className=" fa fa-chevron-right ml-2"></i>
