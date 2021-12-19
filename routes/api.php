@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
+Route::get('/token', [AuthController::class, 'getToken']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -34,6 +35,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/changestatus', [TaskController::class, 'changeTaskStatus']);
 
 
-    Route::post('/getuser', [AuthController::class, 'getUser']);
+    Route::get('/getuser', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
