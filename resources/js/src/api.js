@@ -12,5 +12,5 @@ export default {
     registerUser: (user) => axios.post("/api/register", user),
     loginUser: (user) => axios.post("/api/login", user),
     loginOutUser: () => axios.post("/api/logout"),
-    getLoggedInUser: () => axios.post("/api/getuser"),
+    getLoggedInUser: () => axios.get("/api/getuser"),
 };

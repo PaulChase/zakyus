@@ -5478,7 +5478,7 @@ var axios = window.axios;
     return axios.post("/api/logout");
   },
   getLoggedInUser: function getLoggedInUser() {
-    return axios.post("/api/getuser");
+    return axios.get("/api/getuser");
   }
 });
 
