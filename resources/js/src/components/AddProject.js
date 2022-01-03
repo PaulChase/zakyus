@@ -13,7 +13,7 @@ const AddProject = ({ closeForm, refreshUserProjects }) => {
 
         const project = { name, description };
 
-        console.log(project);
+        // console.log(project);
 
         api.addProject(project).then((res) => {
             setIsPending(false);

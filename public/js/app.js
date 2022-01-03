@@ -5456,8 +5456,8 @@ var axios = window.axios;
   getAllProjects: function getAllProjects() {
     return axios.get("/api/projects");
   },
-  getUserTasks: function getUserTasks(projectID) {
-    return axios.get("/api/usertasks/".concat(projectID));
+  getUserTasks: function getUserTasks(body) {
+    return axios.post("/api/usertasks", body);
   },
   addTask: function addTask(task) {
     return axios.post("/api/tasks", task);
@@ -5729,7 +5729,12 @@ var DashBoard = function DashBoard() {
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null),
       _useState12 = _slicedToArray(_useState11, 2),
       user = _useState12[0],
-      setUser = _useState12[1]; // get the users's project tasks
+      setUser = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(""),
+      _useState14 = _slicedToArray(_useState13, 2),
+      query = _useState14[0],
+      setQuery = _useState14[1]; // get the users's project tasks
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
@@ -5738,10 +5743,14 @@ var DashBoard = function DashBoard() {
     setUser(loggedInUser);
     setProjectID(getProjectID);
     getAllTasks(getProjectID);
-  }, [taskAdded]);
+  }, [taskAdded, query]);
 
   var getAllTasks = function getAllTasks(getProjectID) {
-    _api__WEBPACK_IMPORTED_MODULE_3__["default"].getUserTasks(getProjectID).then(function (res) {
+    var body = {
+      projectID: getProjectID,
+      query: query
+    };
+    _api__WEBPACK_IMPORTED_MODULE_3__["default"].getUserTasks(body).then(function (res) {
       var project = res.data.project;
       var projectTasks = res.data.tasks;
       setIsLoading(false);
@@ -5752,12 +5761,17 @@ var DashBoard = function DashBoard() {
     });
   };
 
+  var searchTask = function searchTask(query) {
+    setQuery(query);
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     className: "  flex  ",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       className: " w-full mr-80",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NavBar__WEBPACK_IMPORTED_MODULE_0__["default"], {
-        currentProject: currentProject
+        currentProject: currentProject,
+        searchTask: searchTask
       }), isLoading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_IsLoading__WEBPACK_IMPORTED_MODULE_5__["default"], {
         message: "Getting your tasks"
       }), tasks && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -6015,7 +6029,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var NavBar = function NavBar(_ref) {
-  var currentProject = _ref.currentProject;
+  var currentProject = _ref.currentProject,
+      searchTask = _ref.searchTask;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("nav", {
     className: "w-full bg-gray-700 text-white flex justify-between items-center p-3",
@@ -6035,10 +6050,11 @@ var NavBar = function NavBar(_ref) {
         action: "",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
           type: "text",
-          className: "  outline-none focus:ring-2 border border-gray-100 rounded-md p-2  mr-3 bg-gray-300 " // value={query}
-          ,
-          placeholder: "Name of the project..." // onChange={(e) => setName(e.target.value)}
-
+          className: "  outline-none focus:ring-2 border border-gray-100 rounded-md p-2  mr-3 bg-gray-300 ",
+          placeholder: "Name of the task...",
+          onChange: function onChange(e) {
+            searchTask(e.target.value);
+          }
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           type: "submit",
           className: " bg-green-500 rounded-md uppercase p-2 font-bold text-white",

@@ -30,9 +30,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('tasks', TaskController::class);
-    Route::get('/usertasks/{id}', [TaskController::class, 'getUserTasks']);
+    Route::post('/usertasks', [TaskController::class, 'getUserTasks']);
     Route::resource('projects', ProjectController::class);
     Route::post('/changestatus', [TaskController::class, 'changeTaskStatus']);
+    // Route::get('/search/{query}', [TaskController::class, 'searchTasks']);
 
 
     Route::get('/getuser', [AuthController::class, 'getUser']);

@@ -4,7 +4,7 @@ export default {
     getAllProjects: () => {
         return axios.get("/api/projects");
     },
-    getUserTasks: (projectID) => axios.get(`/api/usertasks/${projectID}`),
+    getUserTasks: (body) => axios.post(`/api/usertasks`, body),
     addTask: (task) => axios.post("/api/tasks", task),
     addProject: (theProject) => axios.post(`/api/projects`, theProject),
     changeTaskStatus: (taskDetails) =>

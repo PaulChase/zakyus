@@ -12,6 +12,7 @@ const DashBoard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [currentProject, setCurrentProject] = useState(null);
     const [user, setUser] = useState(null);
+    const [query, setQuery] = useState("");
 
     // get the users's project tasks
     useEffect(() => {
@@ -22,10 +23,12 @@ const DashBoard = () => {
 
         setProjectID(getProjectID);
         getAllTasks(getProjectID);
-    }, [taskAdded]);
+    }, [taskAdded, query]);
 
     const getAllTasks = (getProjectID) => {
-        api.getUserTasks(getProjectID)
+        const body = { projectID: getProjectID, query };
+
+        api.getUserTasks(body)
             .then((res) => {
                 const project = res.data.project;
                 const projectTasks = res.data.tasks;
@@ -38,10 +41,19 @@ const DashBoard = () => {
             })
             .catch((err) => console.log(err));
     };
+
+    // search for the tasks that matches the query and reload the component afterwards
+    const searchTask = (query) => {
+        setQuery(query);
+    };
     return (
         <div className="  flex  ">
             <div className=" w-full mr-80">
-                <NavBar currentProject={currentProject} />
+                {/* passing the current project so the name can be shown at the top */}
+                <NavBar
+                    currentProject={currentProject}
+                    searchTask={searchTask}
+                />
                 {isLoading && <IsLoading message="Getting your tasks" />}
                 {tasks && (
                     <div className=" grid grid-cols-3 gap-4 p-3 text-gray-700 ">
@@ -92,6 +104,7 @@ const DashBoard = () => {
                 )}
             </div>
 
+            {/* the users dashboard side bar  */}
             <div className="fixed w-80 top-0 right-0 bg-gray-800 shadow-2xl text-white text-lg h-screen overflow-auto">
                 {tasks && (
                     <SideBar

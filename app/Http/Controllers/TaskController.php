@@ -96,13 +96,15 @@ class TaskController extends Controller
         //
     }
 
-    public function getUserTasks($id)
+    public function getUserTasks(Request $request)
     {
-        $project = Project::find($id);
+        $projectID = $request->input('projectID');
+        $query = $request->input('query');
+        $project = Project::find($projectID);
         if (auth()->id() != $project->user->id) {
             return response()->json(['message' => 'unathorised'], 401);
         }
-        $tasks = $project->tasks()->where('project_id', $id)->orderBy('updated_at', 'desc')->get();
+        $tasks = $project->tasks()->where('name', 'like', "%{$query}%")->orderBy('updated_at', 'desc')->get();
         return response()->json([
             'project' => $project,
             'tasks' => $tasks
@@ -121,4 +123,13 @@ class TaskController extends Controller
 
         return response()->json(['message' => 'success']);
     }
+
+    // public function searchTasks()
+    // {
+    //     $project = Project::find($id);
+    //     if (auth()->id() != $project->user->id) {
+    //         return response()->json(['message' => 'unathorised'], 401);
+    //     }
+    //     $tasks = $project->tasks()->where('project_id', $id)->orderBy('updated_at', 'desc')->get();
+    // }
 }

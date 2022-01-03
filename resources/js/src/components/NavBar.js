@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import { useState, useEffect } from "react";
 
-const NavBar = ({ currentProject }) => {
+const NavBar = ({ currentProject, searchTask }) => {
     const navigate = useNavigate();
 
     return (
@@ -19,9 +19,10 @@ const NavBar = ({ currentProject }) => {
                     <input
                         type="text"
                         className="  outline-none focus:ring-2 border border-gray-100 rounded-md p-2  mr-3 bg-gray-300 "
-                        // value={query}
-                        placeholder="Name of the project..."
-                        // onChange={(e) => setName(e.target.value)}
+                        placeholder="Name of the task..."
+                        onChange={(e) => {
+                            searchTask(e.target.value);
+                        }}
                     />
                     <button
                         type="submit"
