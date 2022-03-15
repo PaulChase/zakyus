@@ -80,13 +80,13 @@ class AuthController extends Controller
         return response(['user' => auth()->user()]);
     }
 
-    public function getToken(Request $request)
-    {
-        $request->session()->regenerate();
-        $Ctoken = $request->session()->token();
+    // public function getToken(Request $request)
+    // {
+    //     // $request->session()->regenerate();
+    //     // $Ctoken = $request->session()->token();
 
-        $CsrfCookie = cookie('XSRF-TOKEN', $Ctoken, 1440);
+    //     // $CsrfCookie = cookie('XSRF-TOKEN', $Ctoken, 1440);
 
-        return response(['message' => 'success', 'token' => $Ctoken])->withCookie($CsrfCookie);
-    }
+    //     return response(['message' => 'success', 'token' => $Ctoken])->withCookie($CsrfCookie);
+    // }
 }

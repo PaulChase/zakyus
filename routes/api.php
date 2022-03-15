@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::get('/token', [AuthController::class, 'getToken']);
+// Route::get('/token', [AuthController::class, 'getToken']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
