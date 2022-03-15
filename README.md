@@ -4,7 +4,7 @@
 
 This is a task management web app for creators to manage their tasks and schedule.
 
-It currently being built with the foolwong technologies:
+It currently being built with the following technologies:
 
 -   Laravel
 -   React for the front end
